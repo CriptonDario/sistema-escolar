@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Sistema Escolar
 
 Sistema para colegios de nivel inicial, primaria y secundaria, con secciones
@@ -328,3 +329,7 @@ El sistema está completo, pero estas cuatro cosas dependen de cuentas del coleg
 
 Pendiente técnico: el sistema se desarrolló y probó sobre SQLite; falta correr
 las pruebas una vez sobre MySQL, que es lo que se usa en producción.
+=======
+# sistema-escolar
+sistema de asistencia mediata QR  completo
+>>>>>>> origin/main
