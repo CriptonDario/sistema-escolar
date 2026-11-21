@@ -1,0 +1,99 @@
+/* Carné del colegio, tamaño DNI (85,6 × 54 mm), anverso y reverso.
+   Todas las medidas internas van en "cqw" (porcentaje del ancho del carné):
+   así se ve igual en el celular, en la pantalla grande y al imprimirlo. */
+.carnes { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+
+.carne {
+    container-type: inline-size;
+    width: 100%; max-width: 430px; aspect-ratio: 856 / 540;
+    position: relative; overflow: hidden;
+    background: #fff; color: #14213d; border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(20, 33, 61, .18);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+
+.carne, .carne * { box-sizing: border-box; }
+
+.carne-cab {
+    height: 27%; background: #14213d; color: #fff;
+    display: flex; align-items: center; gap: 3cqw; padding: 0 4cqw;
+}
+.carne-logo {
+    width: 11cqw; height: 11cqw; border-radius: 50%; background: #fff; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    font-size: 6cqw; color: #14213d;
+}
+.carne-logo img { width: 84%; height: 84%; object-fit: contain; }
+.carne-titulo { min-width: 0; }
+.carne-titulo b { display: block; font-size: 4cqw; font-weight: 800; line-height: 1.15; }
+.carne-titulo small {
+    display: block; font-size: 2.3cqw; letter-spacing: .06em; text-transform: uppercase; opacity: .75;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.carne-anio {
+    margin-left: auto; flex-shrink: 0; text-align: center; line-height: 1.1;
+    border: 1px solid rgba(255, 255, 255, .35); background: rgba(255, 255, 255, .12);
+    border-radius: 1.6cqw; padding: .8cqw 2.2cqw; font-size: 3.4cqw; font-weight: 800;
+}
+.carne-anio span { display: block; font-size: 1.9cqw; font-weight: 600; opacity: .8; }
+
+.carne-cuerpo { position: relative; height: 73%; display: flex; align-items: center; gap: 3.5cqw; padding: 0 4cqw; }
+/* Marca de agua con el escudo. */
+.carne-cuerpo::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: var(--carne-marca, none); background-size: 13cqw; opacity: .07;
+}
+.carne-cuerpo > * { position: relative; }
+
+.carne-foto {
+    width: 19cqw; height: 24cqw; border-radius: 1.5cqw; flex-shrink: 0;
+    background: var(--col-primario, #fd0d0d); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 8cqw; font-weight: 600;
+}
+.carne-foto { overflow: hidden; }
+.carne-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.carne-datos { flex: 1; min-width: 0; margin: 0; }
+.carne-datos dt {
+    font-size: 2.2cqw; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--col-primario, #fd0d0d);
+}
+.carne-datos dd { margin: 0 0 1.6cqw; font-size: 3.6cqw; font-weight: 800; line-height: 1.15; overflow-wrap: anywhere; }
+.carne-datos dd:last-child { margin-bottom: 0; }
+
+.carne-qr { width: 21cqw; flex-shrink: 0; text-align: center; }
+.carne-qr svg { width: 100%; height: auto; display: block; }
+.carne-codigo {
+    display: inline-block; margin-top: 1.5cqw; background: #14213d; color: #fff;
+    border-radius: 1.4cqw; padding: .6cqw 2.4cqw;
+    font-family: ui-monospace, Consolas, monospace; font-size: 2.8cqw; font-weight: 700; letter-spacing: .08em;
+}
+
+.carne-cuerpo.reverso { flex-direction: column; align-items: stretch; gap: 0; padding: 2.5cqw 4cqw; }
+.carne-cuerpo.reverso .carne-datos { flex: none; }
+.carne-aviso {
+    background: #fff8e1; border: 1px solid #f0c040; border-radius: 1.4cqw; color: #5c4a00;
+    padding: 1.4cqw 2cqw; margin-bottom: 2cqw; font-size: 2.5cqw; line-height: 1.3;
+}
+.carne-firma {
+    margin-top: auto; border-top: 1px solid #cfd4de; padding-top: 1cqw;
+    text-align: center; font-size: 2.1cqw; color: #7a8394;
+}
+
+/* Varios carnés en una página (impresión en lote). */
+.carnes-lote { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; padding: 20px; }
+.carnes-lote .carnes { width: 430px; max-width: 100%; }
+
+/* Al imprimir sale solo el carné, a su tamaño real. */
+@media print {
+    @page { margin: 10mm; }
+    body * { visibility: hidden; }
+    .carnes, .carnes * { visibility: visible; }
+    .carnes { position: absolute; left: 0; top: 0; align-items: flex-start; gap: 6mm; }
+    .carne { width: 85.6mm; max-width: none; border-radius: 3mm; box-shadow: none; outline: .2mm solid #999; break-inside: avoid; }
+
+    /* En lote: cada persona en una fila (anverso y reverso lado a lado), 4 filas por hoja A4. */
+    .barra-lote { display: none !important; }
+    .carnes-lote { display: block; padding: 0; }
+    .carnes-lote .carnes { position: static; flex-direction: row; width: auto; margin-bottom: 6mm; break-inside: avoid; }
+}

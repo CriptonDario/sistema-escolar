@@ -1,0 +1,9 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+    level: 5
+    # Los modelos declaran sus conversiones en el metodo casts(): que el analizador las lea.
+    parseModelCastsMethod: true

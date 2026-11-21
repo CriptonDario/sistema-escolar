@@ -1,0 +1,87 @@
+/* Portada de inicio de sesión en dos mitades: a la izquierda el panel de marca
+   con el color del colegio; a la derecha el formulario, limpio sobre blanco.
+   En pantallas angostas el panel se oculta y queda solo el formulario. */
+
+body { min-height: 100vh; margin: 0; background: #f3f5fa; }
+.login-shell { display: flex; min-height: 100vh; }
+
+/* ── Panel de marca ── */
+.login-pano {
+    flex: 1 1 54%; position: relative; overflow: hidden;
+    display: none; color: #fff;
+    background:
+        radial-gradient(700px 420px at 85% 8%, rgba(255,255,255,.18), transparent 60%),
+        radial-gradient(900px 600px at -10% 110%, rgba(0,0,0,.14), transparent 60%),
+        linear-gradient(150deg, var(--col-primario) 0%, var(--col-primario-osc) 100%);
+}
+@media (min-width: 900px) { .login-pano { display: flex; } }
+
+.login-pano-inner { position: relative; z-index: 2; margin: auto; max-width: 480px; padding: 3rem 2.5rem; }
+.login-pano img.escudo {
+    height: 200px; width: 200px; object-fit: contain; background: #fff;
+    border-radius: 32px; padding: 16px; box-shadow: 0 14px 40px rgba(0,0,0,.30);
+}
+.login-pano .sin-escudo { font-size: 5rem; line-height: 1; }
+.login-pano h2 {
+    font-size: 2rem; font-weight: 800; letter-spacing: -.03em;
+    margin: 1.4rem 0 .4rem; color: #fff; line-height: 1.15;
+}
+.login-pano .pano-sub { color: rgba(255,255,255,.78); font-size: .95rem; }
+.pano-feature {
+    display: flex; align-items: center; gap: .85rem;
+    margin-top: 1.15rem; font-size: .9rem; color: rgba(255,255,255,.92);
+}
+.pano-feature i {
+    width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px;
+    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.18);
+    display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+}
+
+/* Formas flotando despacio: la "vida" del panel */
+.pano-blob {
+    position: absolute; border-radius: 50%; z-index: 1; pointer-events: none;
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.16), rgba(255,255,255,.02) 70%);
+    animation: flotar 9s ease-in-out infinite;
+}
+.pano-blob.b1 { width: 300px; height: 300px; top: -80px; right: -60px; }
+.pano-blob.b2 { width: 190px; height: 190px; bottom: 8%; right: 14%; animation-delay: -3s; }
+.pano-blob.b3 { width: 130px; height: 130px; top: 22%; left: -50px; animation-delay: -6s; }
+@keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-18px); }
+}
+@media (prefers-reduced-motion: reduce) { .pano-blob { animation: none; } }
+
+/* ── Lado del formulario ── */
+.login-lado {
+    flex: 1 1 46%; display: flex; align-items: center; justify-content: center;
+    padding: 2rem 1.25rem;
+    background:
+        radial-gradient(700px 400px at 90% -10%, rgba(var(--col-primario-rgb), .06), transparent 60%),
+        #f7f8fb;
+}
+.login-wrap { width: 100%; max-width: 440px; }
+.login-brand { text-align: center; margin-bottom: 1.5rem; }
+.login-brand img { max-height: 76px; max-width: 280px; object-fit: contain; }
+@media (min-width: 900px) { .login-brand img { display: none; } } /* el escudo ya está en el panel */
+.login-brand h1 { color: #1c2430; font-size: 1.4rem; font-weight: 800; margin: .6rem 0 0; letter-spacing: -.02em; }
+.login-brand p {
+    color: #7a8394; font-size: .76rem; margin: .3rem 0 0;
+    text-transform: uppercase; letter-spacing: .12em; font-weight: 600;
+}
+
+.card-login {
+    border: 1px solid rgba(16,24,40,.06); border-radius: 18px; overflow: hidden;
+    border-top: 4px solid var(--col-primario);
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04), 0 18px 50px rgba(16,24,40,.10);
+}
+.card-login:hover { transform: none; box-shadow: 0 1px 2px rgba(16,24,40,.04), 0 18px 50px rgba(16,24,40,.10); }
+.card-login .btn-primary { transition: transform .15s ease, box-shadow .15s ease; }
+.card-login .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(var(--col-primario-rgb), .35);
+}
+
+.login-footer { text-align: center; margin-top: 1.25rem; }
+.login-footer small { color: #9aa3b2; }
